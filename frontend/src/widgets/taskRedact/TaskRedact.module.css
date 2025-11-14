@@ -1,0 +1,72 @@
+.redactContent {
+    padding: 10px 0;
+}
+
+.redactRow {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.label {
+    font-size: 18px;
+    font-weight: 500;
+    color: #262626;
+}
+
+.input {
+    width: 100%;
+}
+
+.amountGroup {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 300px;
+}
+
+.amountInput {
+    width: 100%;
+    padding-right: 60px;
+}
+
+.currency {
+    position: absolute;
+    right: 12px;
+    color: #8c8c8c;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.textarea {
+    width: 100%;
+    border-radius: 8px;
+    resize: vertical;
+}
+
+.dateGroup {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.prefix {
+    color: #8c8c8c;
+    font-size: 14px;
+    font-weight: 500;
+    flex-shrink: 0;
+}
+
+.datePicker {
+    flex: 1;
+    width: 100%;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,13 @@
+.modalContent {
+    padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+.inputRow {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}

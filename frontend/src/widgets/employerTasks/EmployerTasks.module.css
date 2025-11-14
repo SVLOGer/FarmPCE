@@ -1,0 +1,11 @@
+.tasksContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tasks {
+    margin-block-start: 25px;
+    width: 100%;
+}

@@ -1,0 +1,41 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radio {
+    display: flex;
+    justify-content: space-between;
+}
+
+.radioButton {
+    width: 120px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.radioButton:hover {
+    transform: translateY(-1px);
+}
+
+.completed {
+    background-color: #f6ffed !important;
+    border-color: #b7eb8f !important;
+    color: #52c41a !important;
+}
+
+.completed:hover {
+    background-color: #d9f7be !important;
+    border-color: #52c41a !important;
+}
+
+.notCompleted {
+    background-color: #fff2f0 !important;
+    border-color: #ffccc7 !important;
+    color: #ff4d4f !important;
+}
+
+.notCompleted:hover {
+    background-color: #ffccc7 !important;
+    border-color: #ff4d4f !important;
+}

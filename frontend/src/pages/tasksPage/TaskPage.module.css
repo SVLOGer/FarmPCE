@@ -1,0 +1,19 @@
+.container {
+    padding: 20px;
+}
+
+.title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.datePicker {
+    margin-inline-start: 20px;
+    margin-block-end: 20px;
+}
+
+.tasks {
+    margin-inline: 50px;
+    margin-block-start: 20px;
+    padding-block-end: 20px;
+}

@@ -1,0 +1,6 @@
+export {LoginPage} from './loginPage/LoginPage'
+export {HomePage} from './homePage/HomePage'
+export {NotFoundPage} from './notFoundPage/NotFoundPage'
+export {EmployersPage} from './employersPage/EmployersPage'
+export {TasksPage} from './tasksPage/TasksPage'
+export {EndPage} from './endPage/EndPage'

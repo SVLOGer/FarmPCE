@@ -1,0 +1,11 @@
+.detailsContent {
+    padding: 10px 0;
+}
+
+.buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    margin-block-start: 25px;
+}
