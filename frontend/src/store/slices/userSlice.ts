@@ -52,8 +52,5 @@ export const {
     updateUser,
     setUser,
     updateTaskStatus,
-    toggleTaskStatus,
-    addTaskToUser,
-    removeTaskFromUser
 } = userSlice.actions
 export default userSlice.reducer

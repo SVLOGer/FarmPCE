@@ -7,6 +7,8 @@ type UserData = {
     id: string,
     name: string,
     role: number,
+    login: string,
+    password: string,
     assignedTasks: AssignedTaskData[],
 }
 
@@ -25,7 +27,7 @@ type UserTaskData = {
     isDone: boolean,
 }
 
-export {
+export type {
     UserData,
     TaskData,
     UserTaskData,

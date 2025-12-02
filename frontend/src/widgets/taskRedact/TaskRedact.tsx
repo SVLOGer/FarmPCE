@@ -3,8 +3,9 @@ import styles from './TaskRedact.module.css'
 import React, {useState} from 'react'
 import type {TaskData} from "../../shared/types";
 import dayjs from "dayjs";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {addTask, updateTask} from "../../store/slices/tasksSlice.ts";
+import {useAppSelector} from "../../shared/hooks";
 
 interface TaskDetailsProps {
     task?: TaskData
@@ -24,18 +25,18 @@ const TaskRedact: React.FC<TaskDetailsProps> = ({
     const [description, setDescription] = useState(task?.description || '')
     const [deadline, setDeadline] = useState(task?.deadline || '')
     const [requirements, setRequirements] = useState(task?.requirements || '')
-    const {tasks} = useSelector(state => state.tasks)
+    const {tasks} = useAppSelector(state => state.tasks)
 
     const handleSave = () => {
         const getNextTaskId = (): number => {
             if (!tasks.length) return 1;
-            return Math.max(...tasks.map(task => task.id)) + 1;
+            return Math.max(...tasks.map((task: TaskData)  => task.id)) + 1;
         };
 
         const newTask: TaskData = {
             id: task?.id || getNextTaskId(),
             title,
-            cost: reward,
+            cost: reward || 0,
             description,
             deadline,
             requirements,
@@ -81,7 +82,7 @@ const TaskRedact: React.FC<TaskDetailsProps> = ({
                         <Input
                             size='large'
                             type='number'
-                            value={reward}
+                            value={reward || 0}
                             onChange={e => setReward(Number(e.target.value))}
                             placeholder='0'
                             className={styles.amountInput}

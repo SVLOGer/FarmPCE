@@ -1,0 +1,67 @@
+services:
+  # MySQL база данных
+  mysql:
+    build: ./mysql
+    container_name: task_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Uelanrye1746
+      MYSQL_DATABASE: task_management
+      MYSQL_USER: task_user
+      MYSQL_PASSWORD: task_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql     # том для данных
+    networks:
+      - app-network
+
+  # PHP бэкенд
+  backend:
+    build: ./backend
+    container_name: task_backend
+    volumes:
+      - ./backend:/var/www/html
+    expose:
+      - "80"
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+    environment:
+      DB_HOST: mysql
+      DB_NAME: task_management
+      DB_USER: task_user
+      DB_PASS: task_password
+
+  # React фронтенд
+  frontend:
+    build: ./frontend
+    container_name: task_frontend
+    expose:
+      - "80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Единый Nginx для всего
+  nginx:
+    image: nginx:alpine
+    container_name: task_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./frontend/dist:/usr/share/nginx/html  # Монтируем фронтенд
+      - ./backend:/var/www/html  # Монтируем бэкенд для PHP файлов
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql_data:

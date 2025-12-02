@@ -69,7 +69,10 @@ const EmployerTasks: React.FC<EmployerTasksProps> = ({
                     </Button>
                     <div className={styles.tasks}>
                         {userTasks.map((task) => (
-                            <TaskAppoint task={task} employer={employer}/>
+                            <TaskAppoint
+                                task={task}
+                                employer={employer}
+                            />
                         ))}
                     </div>
                 </div>

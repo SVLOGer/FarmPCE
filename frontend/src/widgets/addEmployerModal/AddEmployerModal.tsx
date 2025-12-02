@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {Button, Input, Modal, Typography, message} from "antd";
+import {Button, Input, Modal, Typography, message, Select} from "antd";
 import styles from "./AddEmployerModal.module.css";
 import {addUser} from "../../store/slices/usersSlice.ts";
 import {useDispatch} from "react-redux";
 import {useAppSelector} from "../../shared/hooks";
 import type {UserData} from "../../shared/types";
+import {usersAPI} from "../../shared/api";
 
 interface EmployerDetailsProps {
     isModalOpen: boolean
@@ -21,6 +22,8 @@ const AddEmployerModal: React.FC<EmployerDetailsProps> = ({
     const {users} = useAppSelector(state => state.users)
     const [name, setName] = useState('')
     const [role, setRole] = useState('')
+    const [login, setLogin] = useState('')
+    const [password, setPassword] = useState('')
 
     const getId = (): string => {
         if (users.length === 0) return "1"
@@ -36,32 +39,17 @@ const AddEmployerModal: React.FC<EmployerDetailsProps> = ({
         return (users.length + 1).toString()
     }
 
-    const getRole = (): number | null => {
-        switch(role.toLowerCase().trim()){
-            case 'админ':
-                return 1
-            case 'кадровик':
-                return 2
-            case 'работник':
-                return 3
-            case 'руководитель':
-                return 4
-            default:
-                return null
-        }
-    }
-
     const showError = (content: string) => {
         messageApi.error(content);
     };
 
-    const handleAddUser = () => {
+    const handleAddUser = async () => {
         if (!name.trim()) {
             showError('Введите ФИО сотрудника');
             return;
         }
 
-        const userRole = getRole();
+        const userRole = parseInt(role)
         if (userRole === null) {
             showError('Введите корректную роль: Админ, Кадровик, Работник или Руководитель');
             return;
@@ -71,10 +59,13 @@ const AddEmployerModal: React.FC<EmployerDetailsProps> = ({
             id: getId(),
             name: name.trim(),
             role: userRole,
+            login,
+            password,
             assignedTasks: [],
         }
 
         dispatch(addUser(user))
+        await usersAPI.createUser(user)
         handleCloseModal()
     }
 
@@ -107,10 +98,35 @@ const AddEmployerModal: React.FC<EmployerDetailsProps> = ({
                     </div>
                     <div className={styles.inputRow}>
                         <Typography.Text style={{whiteSpace: 'nowrap', fontSize: '18px'}}>Роль:</Typography.Text>
-                        <Input
+                        <Select
                             value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            placeholder="Админ, Кадровик, Работник или Руководитель"
+                            onChange={(value) => setRole(value)}
+                            placeholder="Выберите роль"
+                            style={{fontSize: '18px', width: '100%'}}
+                            size="large"
+                            options={[
+                                { value: '1', label: 'Админ' },
+                                { value: '2', label: 'Кадровик' },
+                                { value: '3', label: 'Работник' },
+                                { value: '4', label: 'Руководитель' },
+                            ]}
+                        />
+                    </div>
+                    <div className={styles.inputRow}>
+                        <Typography.Text style={{whiteSpace: 'nowrap', fontSize: '18px'}}>Логин:</Typography.Text>
+                        <Input
+                            value={login}
+                            onChange={(e) => setLogin(e.target.value)}
+                            placeholder="Введите логин"
+                            style={{fontSize: '18px'}}
+                        />
+                    </div>
+                    <div className={styles.inputRow}>
+                        <Typography.Text style={{whiteSpace: 'nowrap', fontSize: '18px'}}>Пароль:</Typography.Text>
+                        <Input
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Введите пароль"
                             style={{fontSize: '18px'}}
                         />
                     </div>

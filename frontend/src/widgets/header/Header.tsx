@@ -38,7 +38,7 @@ const Header = () => {
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const {user} = useAppSelector(state => state.user)
-    const popoverItems = usePopoverItems(user.role)
+    const popoverItems = usePopoverItems(user?.role || 0)
     const [open, setOpen] = React.useState(false)
     const {isWorkStarted} = useAppSelector(state => state.workStatus)
 

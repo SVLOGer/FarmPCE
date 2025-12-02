@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import type {UserData} from "../../shared/types";
 import {Button, Input, Modal, Typography} from "antd";
 import styles from "./EmployerDetail.module.css";
-import {useAppSelector} from "../../shared/hooks";
+import {useAppDispatch, useAppSelector} from "../../shared/hooks";
 import {EmployerTasks} from "../employerTasks/EmployerTasks.tsx";
+import {updateUser} from "../../store/slices/usersSlice.ts";
+import {usersAPI} from "../../shared/api";
 
 interface EmployerDetailsProps {
     user: UserData
@@ -16,14 +18,25 @@ const EmployerDetails: React.FC<EmployerDetailsProps> = ({
                                                              isDetailsOpen,
                                                              closeDetails
 }) => {
+    const dispatch = useAppDispatch()
+
     const {user: loginedUser} = useAppSelector(state => state.user)
     const [isRedact, setIsRedact] = useState<boolean>(false)
     const [isOpenTasks, setIsOpenTasks] = useState<boolean>(false)
     const [name, setName] = useState(user.name)
 
-    const isChief = loginedUser.role === 4
+    const isChief = loginedUser?.role === 4
 
-    const handleRedact = () => {
+    const handleRedact = async () => {
+        if (isRedact) {
+            const newUser: UserData = { ...user, name}
+            dispatch(updateUser({
+                id: user.id,
+                data: newUser
+            }))
+            await usersAPI.updateUser(user.id, newUser)
+
+        }
         setIsRedact(!isRedact)
     }
 

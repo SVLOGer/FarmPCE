@@ -8,7 +8,7 @@ import {TaskRedact} from "../taskRedact/TaskRedact.tsx";
 
 interface TaskAppointProps {
     task: TaskData
-    employer: UserData
+    employer?: UserData
 }
 
 const TaskAppoint: React.FC<TaskAppointProps> = ({
@@ -28,15 +28,17 @@ const TaskAppoint: React.FC<TaskAppointProps> = ({
     }
 
     const handleDelete = () => {
-        const newEmployer: UserData = {
-            ...employer,
-            assignedTasks: employer.assignedTasks.filter(taskItem => taskItem.id !== task.id)
-        }
+        if (employer) {
+            const newEmployer: UserData = {
+                ...employer,
+                assignedTasks: employer.assignedTasks.filter(taskItem => taskItem.id !== task.id)
+            }
 
-        dispatch(updateUser({
-            id: employer.id,
-            data: newEmployer
-        }))
+            dispatch(updateUser({
+                id: employer.id,
+                data: newEmployer
+            }))
+        }
     }
 
     return (

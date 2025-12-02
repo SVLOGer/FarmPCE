@@ -2,23 +2,31 @@ import {Input, Button, Typography, Form} from 'antd'
 import {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import styles from './Authorization.module.css'
-import {EmployersRoute, LoginRoute, TasksRoute} from '../../shared/routes'
-import {useAppSelector} from "../../shared/hooks";
+import {EmployersRoute, TasksRoute} from '../../shared/routes'
+import {useAppDispatch} from "../../shared/hooks";
+import {authAPI} from "../../shared/api";
+import {setUser} from "../../store/slices/userSlice.ts";
 
 const Authorization = () => {
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
-    const {user} = useAppSelector(state => state.user)
     const [login, setLogin] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = () => {
-        if (user.role === 2 || user.role === 3) {
-            navigate(TasksRoute.path)
-        } else {
-            navigate(EmployersRoute.path)
+    const handleLogin = async () => {
+        try {
+            const user = await authAPI.login({ login, password });
+            dispatch(setUser(user));
+            if (user?.role === 2 || user?.role === 3) {
+                navigate(TasksRoute.path)
+            } else {
+                navigate(EmployersRoute.path)
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
         }
-    }
+    };
 
     return (
         <div className={styles.container}>
@@ -27,7 +35,7 @@ const Authorization = () => {
             >
                 {'Введите логин и пароль или отсканируйте карту'}
             </Typography.Title>
-            <Form className={styles.form} onFinish={handleSubmit}>
+            <Form className={styles.form} onFinish={handleLogin}>
                 <Form.Item
                     label='Логин'
                     name='login'

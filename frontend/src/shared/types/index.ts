@@ -1,1 +1,1 @@
-export {UserData, TaskData, UserTaskData} from './types'
+export type {UserData, TaskData, UserTaskData} from './types'

@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, Button, Typography, Divider } from 'antd'
 import { useDispatch } from 'react-redux'
 import { updateTaskStatus } from '../../store/slices/userSlice'
@@ -60,7 +59,7 @@ const EndPage = () => {
                         userTasks.map((task, index) => (
                             <div key={task.id}>
                                 <ReportItem
-                                    title={task.title}
+                                    title={task.title || ''}
                                     isDone={task.isDone}
                                     onStatusChange={(newIsDone) => handleTaskStatusChange(task.id, newIsDone)}
                                 />
