@@ -31,4 +31,5 @@ export type {
     UserData,
     TaskData,
     UserTaskData,
+    AssignedTaskData,
 }

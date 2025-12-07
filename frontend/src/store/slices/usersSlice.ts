@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type {UserData} from "../../shared/types";
+import type {AssignedTaskData, UserData,} from "../../shared/types";
 
 interface UsersState {
     users: UserData[]
@@ -41,7 +41,19 @@ const usersSlice = createSlice({
         },
         clearUsers: (state) => {
             state.users = []
-        }
+        },
+        assignTaskToUser: (state, action: PayloadAction<{ userId: string; task: AssignedTaskData }>) => {
+            const { userId, task } = action.payload
+            const user = state.users.find(user => user.id === userId)
+
+            if (user) {
+                const taskExists = user.assignedTasks.some(t => t.id === task.id)
+
+                if (!taskExists) {
+                    user.assignedTasks.push(task)
+                }
+            }
+        },
     },
 })
 
@@ -52,6 +64,7 @@ export const {
     deleteUser,
     setLoading,
     setError,
-    clearUsers
+    clearUsers,
+    assignTaskToUser,
 } = usersSlice.actions
 export default usersSlice.reducer

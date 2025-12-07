@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import type {TaskData, UserData} from "../../shared/types";
 import styles from "./TaskAppoint.module.css";
 import {useAppDispatch} from "../../shared/hooks";
-import {updateUser} from "../../store/slices/usersSlice.ts";
+import {assignTaskToUser, updateUser} from "../../store/slices/usersSlice.ts";
 import {TaskRedact} from "../taskRedact/TaskRedact.tsx";
 
 interface TaskAppointProps {
@@ -41,6 +41,13 @@ const TaskAppoint: React.FC<TaskAppointProps> = ({
         }
     }
 
+    const handleAssignTask = () => {
+        dispatch(assignTaskToUser({
+            userId: employer?.id || '',
+            task: {id: task.id, isDone: false},
+        }))
+    }
+
     return (
         <>
             <Card
@@ -52,6 +59,16 @@ const TaskAppoint: React.FC<TaskAppointProps> = ({
                         <Typography.Text className={styles.taskReward}>{task.cost} руб</Typography.Text>
                     </div>
                     <div className={styles.buttons}>
+                        <Button
+                            type='primary'
+                            onClick={handleAssignTask}
+                            size={'large'}
+                            style={{
+                                fontSize: '18px',
+                            }}
+                        >
+                            Назначить
+                        </Button>
                         <Button
                             type='primary'
                             onClick={handleRedact}
