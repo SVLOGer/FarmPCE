@@ -5,6 +5,7 @@ import {EmployerDetails} from "../employerDetails/EmployerDetails.tsx";
 import type {UserData} from "../../shared/types";
 import {useDispatch} from "react-redux";
 import {deleteUser} from "../../store/slices/usersSlice.ts";
+import {usersAPI} from "../../shared/api";
 
 interface EmployerRowProps {
     user: UserData
@@ -14,8 +15,9 @@ const EmployerRow: React.FC<EmployerRowProps> = ({user}) => {
     const dispatch = useDispatch()
     const [isDetailsOpen, setIsDetailsOpen] = useState(false)
 
-    const handleDeleteUser = () => {
+    const handleDeleteUser = async () => {
         dispatch(deleteUser(user.id))
+        await usersAPI.deleteUser(user.id)
     }
 
     const openDetails = () => {

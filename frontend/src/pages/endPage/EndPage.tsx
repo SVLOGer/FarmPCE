@@ -4,9 +4,13 @@ import { updateTaskStatus } from '../../store/slices/userSlice'
 import { ReportItem } from '../../widgets'
 import styles from './EndPage.module.css'
 import {useAppSelector} from "../../shared/hooks";
+import {assignedTasksAPI} from "../../shared/api";
+import {useNavigate} from "react-router-dom";
+import {HomeRoute} from "../../shared/routes";
 
 const EndPage = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const {user} = useAppSelector(state => state.user)
     const {tasks} = useAppSelector(state => state.tasks)
@@ -22,16 +26,12 @@ const EndPage = () => {
     }) || []
 
     const handleFinishWorkDay = () => {
-        const completedTasks = userTasks.filter(task => task.isDone)
-        const notCompletedTasks = userTasks.filter(task => !task.isDone)
-
-        console.log('Завершенные задачи:', completedTasks)
-        console.log('Незавершенные задачи:', notCompletedTasks)
-        console.log('Рабочий день завершен')
+        navigate(HomeRoute.path)
     }
 
-    const handleTaskStatusChange = (taskId: number, newIsDone: boolean) => {
+    const handleTaskStatusChange = async (taskId: number, newIsDone: boolean) => {
         dispatch(updateTaskStatus({ taskId, isDone: newIsDone }))
+        await assignedTasksAPI.updateTaskStatus(user?.id || '', taskId, newIsDone)
     }
 
     const completedCount = userTasks.filter(task => task.isDone).length

@@ -19,6 +19,7 @@ type TaskData = {
     description: string,
     deadline: string,
     requirements: string,
+    isTaken: boolean,
 }
 
 type UserTaskData = {

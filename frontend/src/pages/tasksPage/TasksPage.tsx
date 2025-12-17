@@ -90,11 +90,7 @@ const TasksPage = () => {
                                 <div className={styles.tasks}>
                                     {filteredTasks.map((task) => (
                                         <TaskCard
-                                            title={task.title}
-                                            reward={task.cost}
-                                            description={task.description}
-                                            deadline={task.deadline}
-                                            requirements={task.requirements}
+                                            task={task}
                                         />
                                     ))}
                                 </div>
