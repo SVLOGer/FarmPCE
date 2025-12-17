@@ -40,6 +40,7 @@ const TaskRedact: React.FC<TaskDetailsProps> = ({
             description,
             deadline,
             requirements,
+            isTaken: false,
         }
 
         if (task) {

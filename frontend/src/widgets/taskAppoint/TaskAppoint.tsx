@@ -5,6 +5,7 @@ import styles from "./TaskAppoint.module.css";
 import {useAppDispatch} from "../../shared/hooks";
 import {assignTaskToUser, updateUser} from "../../store/slices/usersSlice.ts";
 import {TaskRedact} from "../taskRedact/TaskRedact.tsx";
+import {assignedTasksAPI} from "../../shared/api";
 
 interface TaskAppointProps {
     task: TaskData
@@ -27,7 +28,7 @@ const TaskAppoint: React.FC<TaskAppointProps> = ({
         setIsRedact(false)
     }
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (employer) {
             const newEmployer: UserData = {
                 ...employer,
@@ -38,14 +39,20 @@ const TaskAppoint: React.FC<TaskAppointProps> = ({
                 id: employer.id,
                 data: newEmployer
             }))
+
+            await assignedTasksAPI.unassignTask(employer.id, task.id)
         }
     }
 
-    const handleAssignTask = () => {
-        dispatch(assignTaskToUser({
-            userId: employer?.id || '',
-            task: {id: task.id, isDone: false},
-        }))
+    const handleAssignTask = async () => {
+        if (employer) {
+            dispatch(assignTaskToUser({
+                userId: employer.id,
+                task: {id: task.id, isDone: false},
+            }))
+
+            await assignedTasksAPI.assignTask(employer.id, task.id)
+        }
     }
 
     return (
