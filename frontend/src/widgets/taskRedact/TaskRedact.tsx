@@ -6,6 +6,7 @@ import dayjs from "dayjs";
 import {useDispatch} from "react-redux";
 import {addTask, updateTask} from "../../store/slices/tasksSlice.ts";
 import {useAppSelector} from "../../shared/hooks";
+import {tasksAPI} from "../../shared/api";
 
 interface TaskDetailsProps {
     task?: TaskData
@@ -27,7 +28,7 @@ const TaskRedact: React.FC<TaskDetailsProps> = ({
     const [requirements, setRequirements] = useState(task?.requirements || '')
     const {tasks} = useAppSelector(state => state.tasks)
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const getNextTaskId = (): number => {
             if (!tasks.length) return 1;
             return Math.max(...tasks.map((task: TaskData)  => task.id)) + 1;
@@ -48,8 +49,12 @@ const TaskRedact: React.FC<TaskDetailsProps> = ({
                 id: task.id,
                 data: newTask,
             }))
+
+            await tasksAPI.updateTask(task.id, newTask)
         } else {
             dispatch(addTask(newTask))
+
+            await tasksAPI.createTask(newTask)
         }
 
         closeRedact()
