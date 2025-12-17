@@ -10,8 +10,6 @@ services:
       MYSQL_PASSWORD: task_password
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql     # том для данных
     networks:
       - app-network
 
@@ -64,5 +62,5 @@ networks:
   app-network:
     driver: bridge
 
-volumes:
-  mysql_data:
+#volumes:
+#  mysql_data:

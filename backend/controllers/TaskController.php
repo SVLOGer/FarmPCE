@@ -19,6 +19,7 @@ class TaskController {
             $this->taskModel->description = $data->description ?? '';
             $this->taskModel->deadline = $data->deadline ?? null;
             $this->taskModel->requirements = $data->requirements ?? '';
+            $this->taskModel->isTaken = $data->isTaken ?? false;
 
             if ($this->taskModel->create()) {
                 http_response_code(201);
@@ -40,6 +41,7 @@ class TaskController {
         $this->taskModel->description = $data->description ?? '';
         $this->taskModel->deadline = $data->deadline ?? null;
         $this->taskModel->requirements = $data->requirements ?? '';
+        $this->taskModel->isTaken = $data->isTaken ?? false;
 
         if ($this->taskModel->update()) {
             http_response_code(200);

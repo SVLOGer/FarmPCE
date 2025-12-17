@@ -20,6 +20,7 @@ CREATE TABLE tasks (
                        description TEXT,
                        deadline DATE,
                        requirements TEXT,
+                       isTaken BOOL,
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -38,4 +39,4 @@ INSERT INTO users (id, name, role, login, password) VALUES
                                                         ('1', 'Иванов Дмитрий Николаевич', 1, 'admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
                                                         ('2', 'Иванов Максим Андреевич', 2, 'hr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
                                                         ('3', 'Петров Петр Иванович', 3, 'worker1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'),
-                                                        ('1', 'Попов Михал Михалыч', 4, 'worker2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
+                                                        ('4', 'Попов Михал Михалыч', 4, 'worker2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');

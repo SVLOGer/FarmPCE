@@ -9,6 +9,7 @@ class Task {
     public $description;
     public $deadline;
     public $requirements;
+    public $isTaken;
 
     public function __construct($db) {
         $this->conn = $db;
@@ -36,7 +37,7 @@ class Task {
     public function create() {
         $query = "INSERT INTO " . $this->table_name . " 
                   SET title=:title, cost=:cost, description=:description, 
-                      deadline=:deadline, requirements=:requirements";
+                      deadline=:deadline, requirements=:requirements, isTaken=:isTaken";
 
         $stmt = $this->conn->prepare($query);
 
@@ -45,6 +46,7 @@ class Task {
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":deadline", $this->deadline);
         $stmt->bindParam(":requirements", $this->requirements);
+        $stmt->bindParam(":isTaken", $this->isTaken);
 
         if ($stmt->execute()) {
             $this->id = $this->conn->lastInsertId();
@@ -56,7 +58,7 @@ class Task {
     public function update() {
         $query = "UPDATE " . $this->table_name . " 
                   SET title=:title, cost=:cost, description=:description, 
-                      deadline=:deadline, requirements=:requirements 
+                      deadline=:deadline, requirements=:requirements, isTaken=:isTaken
                   WHERE id=:id";
 
         $stmt = $this->conn->prepare($query);
@@ -66,6 +68,7 @@ class Task {
         $stmt->bindParam(":description", $this->description);
         $stmt->bindParam(":deadline", $this->deadline);
         $stmt->bindParam(":requirements", $this->requirements);
+        $stmt->bindParam(":isTaken", $this->isTaken);
         $stmt->bindParam(":id", $this->id);
 
         if ($stmt->execute()) {
@@ -81,7 +84,8 @@ class Task {
             'cost' => $this->cost,
             'description' => $this->description,
             'deadline' => $this->deadline,
-            'requirements' => $this->requirements
+            'requirements' => $this->requirements,
+            'isTaken' => $this->isTaken
         );
     }
 }
